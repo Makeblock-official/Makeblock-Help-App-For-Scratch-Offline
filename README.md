@@ -20,8 +20,15 @@ Running Scratch with Makeblock
 At present, the Makeblock only works with the Scratch 2.0 offline editor. Once you have installed the editor and the M4Scratch, do the following:
 
 1.Plug in a Makeblock.
+
 Start the Makeblock helper application. It should show that the Makeblock is connected.
+
 2.Start Scratch 2.0.
-3.Import the Makeblock Extension file (makeblock.s2e). Hold down the Shift key and click on File at the top left hand corner of the page. 
+
+3.Import the Makeblock Extension file (makeblock.s2e).
+
+Hold down the Shift key and click on File at the top left hand corner of the page. 
+
 4. Now click on More Blocks to see the Makeblock's blocks!
+
 5.Upload the ScratchSerial.ino to your baseboard or meduino.
