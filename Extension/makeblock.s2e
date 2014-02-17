@@ -1,0 +1,18 @@
+{	"extensionName": "Makeblock",
+	"extensionPort": 12345,
+	"blockSpecs": [
+		["", "Set Motor %m.motorPort Speed %n","motor", "M1", 2],
+		["", "Set Servo %m.servoPort at %m.slot Angle %n", "servo", "Port1","Slot1",90],
+		["", "Add %m.device at %m.normalPort","add","Ultrasonic","Port3"],
+		["", "Add Limit Switch at %m.normalPort %m.slot","add/LimitSwitch","Port3","Slot1"],
+		["r", "Get Ultrasonic %m.normalPort Distance","Ultrasonic","Port3"],
+		["b", "Get LimitSwitch %m.normalPort %m.slot State","LimitSwitch","Port3","Slot1"]
+	],
+	"menus": {
+		"normalPort":["Port3","Port4","Port5","Port6","Port7","Port8"],
+		"motorPort":["M1","M2","Port1","Port2"],
+		"servoPort":["Port1","Port2"],
+		"slot":["Slot1","Slot2"],
+		"device":["Ultrasonic","Line Finder","Light"]
+	}
+}
