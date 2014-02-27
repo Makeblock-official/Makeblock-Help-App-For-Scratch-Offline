@@ -20,7 +20,7 @@
 	],
 	"menus": {
 		"normalPort":["Port3","Port4","Port5","Port6","Port7","Port8"],
-		"digitalPin":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","D13"],
+		"digitalPin":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","D13","A0","A1","A2","A3","A4","A5"],
 		"analogPin":["A0","A1","A2","A3","A4","A5"],
 		"motorPort":["M1","M2","Port1","Port2"],
 		"servoPort":["Port1","Port2"],
