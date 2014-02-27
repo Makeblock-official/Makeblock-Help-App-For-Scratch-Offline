@@ -213,7 +213,7 @@ void pinWrite(){
     digitalWrite(atoi(pin),value==2?HIGH:LOW);
   }else if(pin[0]=='A'){
     pin[0]='0';
-    digitalWrite(atoi(pin)+14,value==2?HIGH:LOW);
+    digitalWrite(analogPins[atoi(pin)],value==2?HIGH:LOW);
   }
 }
 
