@@ -1,18 +1,35 @@
 {	"extensionName": "Makeblock",
 	"extensionPort": 12345,
 	"blockSpecs": [
-		["", "Set Motor %m.motorPort Speed %n","motor", "M1", 2],
-		["", "Set Servo %m.servoPort at %m.slot Angle %n", "servo", "Port1","Slot1",90],
-		["", "Add %m.device at %m.normalPort","add","Ultrasonic","Port3"],
-		["", "Add Limit Switch at %m.normalPort %m.slot","add/LimitSwitch","Port3","Slot1"],
-		["r", "Get Ultrasonic %m.normalPort Distance","Ultrasonic","Port3"],
-		["b", "Get LimitSwitch %m.normalPort %m.slot State","LimitSwitch","Port3","Slot1"]
+		["", "set dc motor%m.motorPort speed %n","run/motor", "M1", 50],
+		["", "set servo motor%m.servoPort%m.slot angle%n", "run/servo", "Port1","Slot1",90],
+		["", "add%m.device at%m.normalPort","add","Ultrasonic","Port3"],
+		["", "add%m.exdevice at%m.normalPort%m.slot","addex","LimitSwitch","Port3","Slot1"],
+		["r", "ultrasonic%m.normalPort distance","Ultrasonic","Port3"],
+		["r", "linefinder%m.normalPort state","Line Finder","Port3"],
+		["b", "limitswitch%m.normalPort%m.slot state","LimitSwitch","Port3","Slot1"],
+		["r", "lightsensor%m.normalPort","LightSensor","Port3"],
+		["r", "soundsensor%m.normalPort","SoundSensor","Port3"],
+		["r", "temperature%m.normalPort%m.slot","Temperature","Port3","Slot1"],
+		["r", "joystick%m.normalPort %m.Axis","Joystick","Port3","X-Axis"],
+		["r", "button%m.normalPort","Button","Port3"],
+		["", "set pin%m.digitalPin mode%m.mode","mode/pin","D3","Input"],
+		["", "set pin%m.digitalPin level%m.digital","write/pin","D3","High"],
+		["b", "digital read%m.digitalPin","digital","D3"],
+		["r", "analog read%m.analogPin","analog","A0"]
 	],
 	"menus": {
 		"normalPort":["Port3","Port4","Port5","Port6","Port7","Port8"],
+		"digitalPin":["D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","D13"],
+		"analogPin":["A0","A1","A2","A3","A4","A5"],
 		"motorPort":["M1","M2","Port1","Port2"],
 		"servoPort":["Port1","Port2"],
 		"slot":["Slot1","Slot2"],
-		"device":["Ultrasonic","Line Finder","Light"]
+		"device":["Ultrasonic","Line Finder","Light Sensor","Sound Sensor","Joystick","Button"],
+		"exdevice":["LimitSwitch","Temperature"],
+		"mode":["Input","Output"],
+		"type":["Digital","Analog"],
+		"Axis":["X-Axis","Y-Axis"],
+		"digital":["Low","High"]
 	}
 }
