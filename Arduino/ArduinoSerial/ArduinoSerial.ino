@@ -21,6 +21,8 @@ int slot;
 int ultrasonic_port=-1;
 int switch_port=-1;
 int switch_slot=1;
+long servoTime = 0;
+bool isServoRun = false;
 typedef struct{
   int type;
   int mode;
@@ -71,8 +73,8 @@ void runDevice(){
       servo.reset(port,slot);
       servo.begin();
       servo.write(value);
-      delay(200);
-      servo.detach();
+      isServoRun = true;
+      servoTime = millis();
     }
   }else if(pin>0){
     
@@ -182,6 +184,10 @@ void checkDevice(){
       serial.println(analogRead(analogPins[i-12]));
     }
   }
+  if(isServoRun&&millis()-servoTime>500){
+     isServoRun = false;
+     servo.detach(); 
+  }
 }
 void setPinMode(){
   if(value==0){
@@ -219,9 +225,9 @@ void pinWrite(){
 
 long currentTime = 0;
 long sampleTime = 100;
+long baudrate = 115200;
 void setup() {
-  serial.begin(115200);
-  while (!Serial) ;
+  serial.begin(baudrate);
   serial.println("Application Start");
 }
 void loop() {
@@ -230,6 +236,7 @@ void loop() {
     currentTime = millis();
     checkDevice();
   }
+  
   if(serial.paramAvailable()){
     device = serial.getParamCode("device");
     port = serial.getParamValue("port");
@@ -237,6 +244,7 @@ void loop() {
     value = serial.getParamValue("value");
     slot = serial.getParamValue("slot");
     method = serial.getParamCode("method");
+    
     if(strcmp(device,"reset")==0){
       int i;
       for(i=0;i<10;i++){
