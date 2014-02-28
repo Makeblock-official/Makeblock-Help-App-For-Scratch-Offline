@@ -6,7 +6,7 @@
 		["", "添加%m.device 在%m.normalPort","add","Ultrasonic","Port3"],
 		["", "添加%m.exdevice 在%m.normalPort%m.slot","addex","LimitSwitch","Port3","Slot1"],
 		["r", "超声波%m.normalPort 距离","Ultrasonic","Port3"],
-		["r", "寻线传感器%m.normalPort 状态","Line Finder","Port3"],
+		["r", "寻线传感器%m.normalPort 状态","LineFinder","Port3"],
 		["b", "限位开关%m.normalPort%m.slot 状态","LimitSwitch","Port3","Slot1"],
 		["r", "光线传感器%m.normalPort","LightSensor","Port3"],
 		["r", "声音传感器%m.normalPort","SoundSensor","Port3"],

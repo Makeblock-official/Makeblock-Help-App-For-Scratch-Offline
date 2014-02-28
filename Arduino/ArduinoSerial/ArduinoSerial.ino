@@ -98,7 +98,7 @@ void checkDevice(){
         case 4:{
           linefinder.reset(portNum);
           int state = linefinder.readSensors();
-          serial.print("Line%20Finder/Port");
+          serial.print("LineFinder/Port");
           serial.print(portNum);
           serial.print(" ");
           serial.println(state);
