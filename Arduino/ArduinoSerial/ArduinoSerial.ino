@@ -97,7 +97,7 @@ void checkDevice(){
         case 5:{
           limitswitch.reset(portNum,ports[i].slot[0]==1?1:2);
           int touched = limitswitch.touched();
-          sendCommand("LimitSwitch/Port",portNum,ports[i].slot[0]==1?1:2,touched==1);
+          sendCommand("LimitSwitch/Port",portNum,ports[i].slot[0]==1?1:2,touched==0,true);
         }
         break;
         case 6:{
@@ -155,6 +155,9 @@ void checkDevice(){
   }
 }
 void sendCommand(const char*cmd,int cPort,int cSlot,double v){
+  sendCommand(cmd,cPort,cSlot,v,false);
+}
+void sendCommand(const char*cmd,int cPort,int cSlot,double v,bool isBool){
   serial.print(cmd);
   serial.print(cPort);
   if(cSlot>-1){
@@ -162,7 +165,11 @@ void sendCommand(const char*cmd,int cPort,int cSlot,double v){
     serial.print(cSlot);
   }
   serial.print(" ");
-  serial.println(v);
+  if(isBool){
+    serial.println(v!=0?"true":"false");
+  }else{
+    serial.println(v);
+  }
 }
 void setPinMode(){
   if(value==0){
@@ -200,7 +207,7 @@ void pinWrite(){
 
 long currentTime = 0;
 long sampleTime = 100;
-long baudrate = 9600;
+long baudrate = 115200;
 void setup() {
   serial.begin(baudrate);
   serial.println("Application Start");
