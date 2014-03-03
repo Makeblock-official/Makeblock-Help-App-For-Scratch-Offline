@@ -58,8 +58,6 @@ void addDevice(){
     }else if(strcmp(device,"Button")==0){
       ports[index].type=10;
     }
-  }else if(pin>0){
-    
   }
 }
 void runDevice(){
@@ -76,8 +74,6 @@ void runDevice(){
       isServoRun = true;
       servoTime = millis();
     }
-  }else if(pin>0){
-    
   }
 }
 void checkDevice(){
@@ -89,48 +85,31 @@ void checkDevice(){
         case 3:{
           ultrasonic.reset(portNum);
           int dist = ultrasonic.distanceCm();
-          serial.print("Ultrasonic/Port");
-          serial.print(portNum);
-          serial.print(" ");
-          serial.println(dist);
+          sendCommand("Ultrasonic/Port",portNum,-1,dist);
         }
         break;
         case 4:{
           linefinder.reset(portNum);
           int state = linefinder.readSensors();
-          serial.print("LineFinder/Port");
-          serial.print(portNum);
-          serial.print(" ");
-          serial.println(state);
+          sendCommand("LineFinder/Port",portNum,-1,state);
         }
         break;
         case 5:{
           limitswitch.reset(portNum,ports[i].slot[0]==1?1:2);
           int touched = limitswitch.touched();
-          serial.print("LimitSwitch/Port");
-          serial.print(portNum);
-          serial.print("/Slot");
-          serial.print(ports[i].slot[0]==1?1:2);
-          serial.print(" ");
-          serial.println(touched==1?"true":"false");
+          sendCommand("LimitSwitch/Port",portNum,ports[i].slot[0]==1?1:2,touched==1);
         }
         break;
         case 6:{
           lightsensor.reset(portNum);
           int light = lightsensor.strength();
-          serial.print("LightSensor/Port");
-          serial.print(portNum);
-          serial.print(" ");
-          serial.println(light);
+          sendCommand("LightSensor/Port",portNum,-1,light);
         }
         break;
         case 7:{
           soundsensor.reset(portNum);
           int sound = soundsensor.strength();
-          serial.print("SoundSensor/Port");
-          serial.print(portNum);
-          serial.print(" ");
-          serial.println(sound);
+          sendCommand("SoundSensor/Port",portNum,-1,sound);
         }
         break;
         case 8:{
@@ -140,12 +119,7 @@ void checkDevice(){
             t = temperature.temperature();
           }
           if(t>-100){
-            serial.print("Temperature/Port");
-            serial.print(portNum);
-            serial.print("/Slot");
-            serial.print(ports[i].slot[0]==1?1:2);
-            serial.print(" ");
-            serial.println(t);
+            sendCommand("Temperature/Port",portNum,ports[i].slot[0]==1?1:2,t);
           }
         }
         break;
@@ -162,10 +136,7 @@ void checkDevice(){
         case 10:{
           button.reset(portNum);
           int state = button.pressed();
-          serial.print("Button/Port");
-          serial.print(portNum);
-          serial.print(" ");
-          serial.println(state);
+          sendCommand("Button/Port",portNum,-1,state);
         }
         break;
       }
@@ -173,21 +144,25 @@ void checkDevice(){
   }
   for(i=0;i<18;i++){
     if(pins[i].type==1){
-      serial.print("digital/D");
-      serial.print(i+2);
-      serial.print(" ");
-      serial.println(digitalRead(i+2)?"true":"false");
+      sendCommand("digital/D",i+2,-1,digitalRead(i+2));
     }else if(pins[i].type==2){
-      serial.print("analog/A");
-      serial.print(i-12);
-      serial.print(" ");
-      serial.println(analogRead(analogPins[i-12]));
+      sendCommand("analog/A",i-12,-1,analogRead(analogPins[i-12]));
     }
   }
   if(isServoRun&&millis()-servoTime>500){
      isServoRun = false;
      servo.detach(); 
   }
+}
+void sendCommand(const char*cmd,int cPort,int cSlot,double v){
+  serial.print(cmd);
+  serial.print(cPort);
+  if(cSlot>-1){
+    serial.print("/Slot");
+    serial.print(cSlot);
+  }
+  serial.print(" ");
+  serial.println(v);
 }
 void setPinMode(){
   if(value==0){
@@ -225,7 +200,7 @@ void pinWrite(){
 
 long currentTime = 0;
 long sampleTime = 100;
-long baudrate = 115200;
+long baudrate = 9600;
 void setup() {
   serial.begin(baudrate);
   serial.println("Application Start");
